@@ -1,0 +1,91 @@
+
+{% extends "productos/base.html"%}
+
+
+{%load static %}
+{%block content %}
+
+ <section class="formations-section">
+    <h2>¿Que puedes hacer con Stokio? </h2>
+    <div class="formation-grid">
+      <div class="formation-card" data-aos="fade-up">
+        <h3>Gestion de Productos</h3>
+        <ul>
+          <li>📌 Agrega, edita o elimina productos fácilmente.</li>
+          <li>📌 Organiza tu inventario por categorías.</li>
+          <li>📌 Consulta existencias en tiempo real.</li>
+        </ul>
+      </div>
+
+      <div class="formation-card" data-aos="fade-up" data-aos-delay="100">
+        <h3>Control de Stock</h3>
+        <ul>
+            <li>📌 Registra entradas y salidas de productos.</li>
+            <li>📌 Recibe alertas por bajo stock.</li>
+            <li>📌 Evita pérdidas con seguimiento actualizado.</li>
+        </ul>
+      </div>
+      <div class="formation-card" data-aos="fade-up" data-aos-delay="200">
+        <h3>Reportes y Análisis </h3>
+        <ul>
+            <li>📌 Genera reportes de inventario en PDF.</li>
+            <li>📌 Visualiza movimientos en el stock.</li>
+            <li>📌 Toma decisiones con datos claros y precisos.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section  class="contact-form-container"> 
+  <div class="login-form-container">
+  <h2>Iniciar Sesión</h2>
+     {% if error %}
+        <p style="color: red;">{{error}}</p>
+    {% endif %}
+  <form id="login-form" action="{% url 'validacion'%}" method="post">
+      {% csrf_token %}
+      
+      {% if messages %}
+        {%for msg in messages %}
+          <p style="color: red; text-align: center; "> {{ msg }}</p>
+          {% endfor %}
+      {% endif %}
+    <input type="text" id="username" name="username" placeholder="Nombre de usuario" required>
+    <input type="password" id="password" name="password" placeholder="Contraseña" required>
+    <button type="submit">Entrar</button>
+  </form>
+  <br>
+  <p class="register-text">
+    ¿No tienes una cuenta? <a href="{% url 'registro_view'%}">Regístrate aquí</a>
+  </p>
+</div>
+
+</section>
+
+<section class="formations-section"> 
+    <div class="map-container">
+       <iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Colombia%20Medellin+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.mapsdirections.info/it/calcola-la-popolazione-su-una-mappa/">densità di popolazione Italia mappa</a></iframe>
+    </div>
+</section>
+
+<section> 
+ 
+      <div class="contact-form-container">
+
+    <h2>Contactanos</h2>
+    <form id="contact-form" method="post" action="{% url 'contacto' %}">
+      {% csrf_token %}
+
+      <input type="text" id="name" name="name" placeholder="Nombre" required>
+      <input type="text" id="ape" name="ape" placeholder="Apellido" required>
+      <input type="tel" id="tel" name ="tel" placeholder="Teléfono" required>
+      <input type="email" id="email" name= "email" placeholder="Email" required>
+      <textarea id="message" name="mensaje" placeholder="Dejanos tu mensaje..." required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+</section>
+
+{%endblock%}
+
+

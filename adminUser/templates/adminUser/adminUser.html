@@ -1,0 +1,522 @@
+{% extends "productos/base.html"%} {% block header %}
+
+<style>
+  table {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  table caption {
+    font-size: 1.5em;
+    margin: 0.5em 0 0.75em;
+  }
+
+  table tr {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 0.35em;
+  }
+
+  table th,
+  table td {
+    padding: 0.625em;
+    text-align: center;
+  }
+
+  table th {
+    font-size: 0.85em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  @media screen and (max-width: 600px) {
+    table {
+      border: 0;
+    }
+
+    table caption {
+      font-size: 1.3em;
+    }
+
+    table thead {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+
+    table tr {
+      border-bottom: 3px solid #ddd;
+      display: block;
+      margin-bottom: 0.625em;
+    }
+
+    table td {
+      border-bottom: 1px solid #ddd;
+      display: block;
+      font-size: 0.8em;
+      text-align: right;
+    }
+
+    table td::before {
+      /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    table td:last-child {
+      border-bottom: 0;
+    }
+  }
+  .btn-agotado {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .btn-agotado:hover {
+    background-color: #e60000;
+  }
+
+  .celda-agotada {
+    background-color: #e60000;
+    color: white;
+    font-weight: bold;
+  }
+  .btn-eliminar {
+    padding: 5px 10px;
+    background-color: #ff5741;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  * td {
+    color: black;
+    font-weight: none;
+  }
+  .btn-eliminar:hover {
+    background-color: #cc0000;
+  }
+  a:hover{  
+    color: white;
+    text-shadow: 2px 1px 8px rgb(6, 212, 248);
+    transition: 0.80s all ease-in;
+    transform: scale(0.80) ease;
+  }
+  a{  
+    color: white;
+    text-decoration: none;
+    transition: 0.80s ease;
+
+}
+.btn-registro {
+    padding: 8px 14px;
+    margin: 5px;
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+
+    background-color: #2569fdc7;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 14px;
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-registro:hover {
+    background-color: #1e40af;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-registro:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+.btn-reg-general{ 
+
+    margin: 10px;
+    height: 45px;
+    width: 150px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+
+    background-color: #2569fdc7;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 15px;
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease-in-out;
+}
+.btn-reg-general:hover {
+    background-color: #1e40af;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-reg-general {
+    transform: translateY(0);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+.container-reg{ 
+  display:flex;
+  justify-content: center;
+  margin-top: 2px;
+}
+.container-general{ 
+  border: 1px solid black;
+  margin: 10px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  border-color: #b8bac2;
+  background-color: #aab2ce52;
+}
+
+</style>
+<header>
+  <a
+    href="{% url 'logout' %}"
+    class="ceo-tag"
+    style="
+      display: inline-block;
+      text-decoration: none;
+      border: 1px white solid;
+      padding: 5px;
+      border-radius: 10px;
+    "
+    >Log Out</a
+  >
+  <h1><strong>Stokio</strong></h1>
+  <h2>Sistema de Gestión de Inventario</h2>
+  <p class="slogan">
+    Optimiza el control de productos, existencias y movimientos de tu empresa
+    con una plataforma eficiente y moderna.
+  </p>
+
+  <!-- Icônes animées -->
+  <br /><br />
+  <h2 style="font-weight: bold; text-decoration: underline; font-size: 2rem">
+    {% if request.session.usuario_nombre %} 
+      Bienvenido {{request.session.usuario_nombre}} 
+    {% endif %}
+  </h2>
+
+  <h2> 
+    <a class="Panel" href= "{% url 'admin:index' %}" target="_blank" rel="noopener noreferrer">Panel Administrativo</a>
+  </h2>
+</header>
+{% endblock %} {%block content %}
+<!-- Section des formations -->
+
+<section class="contact-form-container">
+  <h2>Registrar Productos</h2>
+  <form
+    id="form-admin-register"
+    method="post"
+    action="{%url 'registrar_productos_admin'%}#edit_productos_admin"
+  >
+    {% csrf_token %}
+    <input
+      type="text"
+      id="username"
+      name="username"
+      placeholder="Nombre del producto✏️"
+      required
+    />
+    <input
+      type="text"
+      id="categoria"
+      name="categoria"
+      placeholder="Tipo de categoria🗒️"
+      required
+    />
+    <input
+      type="number"
+      id="precio"
+      name="precio"
+      placeholder="Precio💵"
+      required
+    />
+    <input
+      type="number"
+      id="cantidad"
+      name="cantidad"
+      placeholder="Cantidad❓"
+      required
+    />
+    <p style="font: bold">Fecha de ingreso</p>
+    <input type="date" id="fecha_ingreso" name="fecha_ingreso" />
+    <p style="font: bold">Fecha de salida</p>
+    <input type="date" id="fecha_salida" name="fecha_salida" />
+    <textarea
+      id="mensaje"
+      name="mensaje"
+      placeholder="Descripción..."
+      required
+    ></textarea>
+    <button type="submit">Guardar Producto</button>
+  </form>
+</section>
+<div class="container-general">
+  <p style="text-align: center; font-size: 20px; text-decoration: underline;">Registro General</p>
+  <p style="text-align: center; font-size: 30px;">⬇️</p>
+  <div class="container-reg">
+    <a href="{% url 'reporte_general' %}" target="_blank">
+      <button class="btn-reg-general">Registro general</button>
+    </a>
+  </div>
+</div>
+<div id="edit_productos_admin">
+  <table>
+    <caption>
+      Productos Registrados
+    </caption>
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Categoria</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Stock</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Fecha de ingreso</th>
+        <th scope="col">Fecha de salida</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Acciones</th>
+        <th scope="col">Generar Registro</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for producto in productos %}
+      <tr>
+        <td data-label="Account">{{producto.id}}</td>
+        <td data-label="Due Date">{{producto.nombre}}</td>
+        <td data-label="Amount">{{producto.categoria}}</td>
+        <td data-label="Period">{{producto.precio}}</td>
+        <td data-label="Period">{{producto.stock}}</td>
+        <td data-label="Period">{{producto.descripcion}}</td>
+        <td data-label="Period">{{producto.fecha_ingreso}}</td>
+        <td data-label="Period">{{producto.fecha_salida}}</td>
+        <td class="estado"></td>
+        <td class="acciones"></td>
+        <td class="btn-imp">  
+          <a href="{% url 'reporte_pdf' producto.id %}" target="_blank">
+          <button class="btn-registro">Por producto</button> 
+           </a>
+        </td>
+      </tr>
+      {% empty %}  
+    
+      <tr>
+        <td colspan="5">No hay productos registrados.</td>
+      </tr>
+      {% endfor %}
+     
+    </tbody>
+  </table>
+
+</div>
+<br />
+<hr />
+<section class="contact-form-container">
+  <h2>Editar Productos</h2>
+  <form
+    id="form-editar-admin"
+    method="post"
+    action="{% url 'editar_productos_admin'%}#edit_productos_admin"
+  >
+    {% csrf_token %}
+    <input
+      type="text"
+      id="nombre_buscar"
+      name="nombre_buscar"
+      placeholder="Nombre del producto 🔎"
+      required
+    />
+    <input
+      type="text"
+      id="nombre_new"
+      name="nombre_new"
+      placeholder="Nuevo nombre...✏️"
+    />
+    <input
+      type="text"
+      id="categoria"
+      name="categoria"
+      placeholder="Nueva categoria🗒️"
+    />
+    <input
+      type="number"
+      id="precio"
+      name="precio"
+      placeholder="Nuevo Precio💵"
+    />
+    <input
+      type="number"
+      id="cantidad"
+      name="cantidad"
+      placeholder="Nueva Cantidad 🤔"
+    />
+    <p style="font: bold">Fecha de ingreso</p>
+    <input type="date" id="fecha1" name="fecha_ingreso" />
+    <p style="font: bold">Fecha de salida</p>
+    <input type="date" id="fecha2" name="fecha_salida" />
+    <textarea
+      id="mensaje"
+      name="mensaje"
+      placeholder="Nueva Descripción..."
+    ></textarea>
+    <button type="submit">Editar</button>
+  </form>
+</section>
+
+<br />
+<hr />
+
+<section class="contact-form-container">
+  <h2>Buscar Productos</h2>
+  <form
+    id="form-buscar-admin"
+    method="post"
+    action="{% url 'buscar_productos_admin'%}#resultados_busquedad_admin"
+  >
+    {% csrf_token %}
+    <input
+      type="text"
+      id="nombre_buscar"
+      name="nombre_buscar"
+      placeholder="Buscar por nombre... 🔎"
+    />
+    <input
+      type="text"
+      id="categoria"
+      name="categoria"
+      placeholder="Buscar por categoria...🔎"
+    />
+    <button type="submit">Buscar</button>
+  </form>
+</section>
+
+<div id="resultados_busquedad_admin">
+  <!--ANCLA: resultados_busquedad, para que la pagina no se recargue -->
+  <table>
+    <caption>
+      Productos Encontrados
+    </caption>
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Categoria</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Stock</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in productos_encontrados %}
+      <tr>
+        <td>{{p.id}}</td>
+        <td>{{p.nombre}}</td>
+        <td>{{p.categoria}}</td>
+        <td>{{p.precio}}</td>
+        <td>{{p.stock}}</td>
+        <td>{{p.descripcion}}</td>
+        <td class="estado"></td>
+        <td class="acciones"></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const filas = document.querySelectorAll("table tbody tr");
+
+    filas.forEach((fila) => {
+      const cantidadCell = fila.querySelector("td:nth-child(5)"); // columna STOCK
+      const estadoCell = fila.querySelector(".estado");
+      const accionCell = fila.querySelector(".acciones");
+
+      if (cantidadCell && estadoCell && accionCell) {
+        let cantidad = parseInt(cantidadCell.textContent);
+        let idProducto = parseInt(
+          fila.querySelector("td:first-child").textContent
+        );
+        if (isNaN(idProducto)) {
+          return;
+        }
+        if (!accionCell.querySelector(".btn-eliminar")) {
+          let enlace = document.createElement("a");
+          enlace.textContent = "Eliminar";
+          enlace.href = `/adminUser/eliminar_productos_admin/${idProducto}/`;
+          enlace.classList.add("btn-eliminar");
+
+          enlace.addEventListener("click", function(e) {  
+            e.preventDefault();
+            const confirmar = confirm("🤔 ¿Estás seguro de que desea eliminar este producto? 🤔");
+            if (confirmar) {  
+              const alerConfirm = alert("¡Producto Eliminado! ✔️");
+              window.location.href = enlace.href;
+            }
+          });
+          accionCell.appendChild(enlace);
+       
+          if (cantidad <= 2) {
+            estadoCell.textContent = "Agotado";
+            fila.style.backgroundColor = "#FF8282";
+            fila.style.fontWeight = "bold";
+
+            /*let boton = document.createElement("button");
+                boton.textContent = "Eliminar";
+                boton.classList.add("btn-eliminar");
+                accionCell.appendChild(boton);*/
+          } else if (cantidad >= 3 && cantidad <= 8) {
+            estadoCell.textContent = "Pocas unidades";
+            fila.style.backgroundColor = "#ffc548";
+            estadoCell.style.fontWeight = "bold";
+            fila.style.fontWeight = "bold";
+          } else {
+            estadoCell.textContent = "Disponible";
+            fila.style.backgroundColor = "#99FF99";
+            fila.style.fontWeight = "bold";
+            enlace.style.display = "none";
+          }
+        }
+      }
+    });
+  });
+</script>
+{%endblock%}

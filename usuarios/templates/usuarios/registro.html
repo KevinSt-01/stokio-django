@@ -1,0 +1,50 @@
+{%extends "productos/base.html"%}
+
+{% block title %} {% endblock %}
+
+{% block header %}
+  <header>
+     <a
+    href="{% url 'logout' %}"
+    class="ceo-tag"
+    style="
+      display: inline-block;
+      text-decoration: none;
+      border: 1px white solid;
+      padding: 5px;
+      border-radius: 10px;
+    "
+    >ATRAS</a>
+    <h1><strong>Stokio</strong></h1>
+    <h2>  Sistema de Gestión de Inventario </h2>
+    <p class="slogan">Optimiza el control de productos, existencias y movimientos de tu empresa con una plataforma eficiente y moderna.</p>
+
+    <!-- Icônes animées -->
+    <div class="icon-scroll-container">
+      <div class="icon-scroll">
+         <p><strong> Stokio — Orden ✔️ control ✔️ y eficiencia  ✔️.</strong></p>
+      </div>
+    </div>
+  </header>
+{% endblock %}
+
+{%block content %}
+
+
+<section  class="contact-form-container"> 
+    <h2>Registrarse</h2>
+    {% if error %}
+        <p style="color: red;">{{error}}</p>
+    {% endif %}
+    <form id="login-form" method="post" action="{% url 'registro' %}">
+        {% csrf_token %}
+        <input type="text" id="username" name="username" placeholder="Nombre de usuario" required>
+        <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
+        <input type="password" id="password1" name="password1" placeholder="Contraseña" required>
+        <input type="password" id="password2" name="password2" placeholder="Confirmar contraseña" required>
+        <button type="submit">Registrarse</button>
+    </form>
+
+</section>
+
+{% endblock %}

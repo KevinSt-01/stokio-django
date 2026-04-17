@@ -1,0 +1,447 @@
+
+{%load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block title %}
+  
+{% endblock %}
+
+
+  <!-- Police Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- Icônes FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Bibliothèque AOS (Animate On Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    /* Reset CSS */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* En-tête */
+    header {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      padding: 150px 20px 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header h1 {
+      font-size: 4rem;
+      font-weight: 300;
+      margin-bottom: 10px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    header h1 strong {
+      font-weight: 700;
+    }
+
+    header h2 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 20px;
+      animation: fadeIn 2.5s ease-in-out;
+    }
+
+    header .slogan {
+      font-size: 1.2rem;
+      font-style: italic;
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    header .ceo-tag {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Icônes animées */
+    .icon-scroll-container {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .icon-scroll {
+      display: inline-block;
+      animation: scrollIcons 8s linear infinite;
+    }
+
+    .icon-scroll img {
+      height: 50px;
+      margin: 0 20px;
+      filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
+    }
+
+    @keyframes scrollIcons {
+      0% {
+        transform: translateX(100%);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Section des formations */
+    .formations-section {
+      padding: 50px 20px;
+      background-color: #fff;
+    }
+
+    .formations-section h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      color: #2575fc;
+    }
+
+    .formation-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .formation-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      width: 300px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .formation-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .formation-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #2575fc;
+      text-align: center;
+    }
+
+    .formation-card ul {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+
+    .formation-card ul li {
+      margin-bottom: 10px;
+    }
+
+    .formation-card button {
+      background-color: #2575fc;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    .formation-card button:hover {
+      background-color: #1a5bbf;
+    }
+
+    /* Carte */
+    .map-container {
+      margin: 50px auto;
+      max-width: 800px;
+      height: 400px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* Formulaire de contact */
+    .contact-form-container {
+      background: #fff;
+      padding: 40px;
+      margin: 50px auto;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2575fc;
+    }
+
+    .contact-form-container input,
+    .contact-form-container textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .contact-form-container textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    .contact-form-container button {
+      background-color: #2575fc;
+      color: #fff;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    .contact-form-container button:hover {
+      background-color: #1a5bbf;
+    }
+
+    /* Pied de page */
+    footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    footer .contact-info {
+      margin-top: 10px;
+    }
+
+    footer a {
+      color: #ff6f61;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    footer .creator {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 3rem;
+      }
+
+      header h2 {
+        font-size: 1.2rem;
+      }
+
+      .formation-card {
+        width: 100%;
+      }
+
+      .map-container {
+        height: 300px;
+      }
+
+      .contact-form-container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- En-tête -->
+   {% block header %}
+  <header>
+    <div class="ceo-tag">Stokio Inventary</div>
+    <h1><strong>Stokio</strong></h1>
+    <h2>  Sistema de Gestión de Inventario </h2>
+    <p class="slogan">Optimiza el control de productos, existencias y movimientos de tu empresa con una plataforma eficiente y moderna.</p>
+
+    <!-- Icônes animées -->
+    <div class="icon-scroll-container">
+      <div class="icon-scroll">
+         <p><strong> Stokio — Orden ✔️ control ✔️ y eficiencia  ✔️.</strong></p>
+      </div>
+    </div>
+  </header>
+  {% endblock %}
+
+  {%block content %}
+  <!-- Section des formations -->
+  <section class="formations-section">
+    <h2>Nos Formations</h2>
+    <div class="formation-grid">
+      <div class="formation-card" data-aos="fade-up">
+        <h3>Développement Web</h3>
+        <ul>
+          <li>HTML, CSS, JavaScript avancé</li>
+          <li>Création de sites web modernes</li>
+          <li>Mini logiciels personnalisés</li>
+          <li>Durée : 3 mois</li>
+          <li>Coût : 10 000 FCFA (inscription) + 15 000 FCFA/mois</li>
+        </ul>
+        <button onclick="openForm('Développement Web')">Demander un devis</button>
+      </div>
+      <div class="formation-card" data-aos="fade-up" data-aos-delay="100">
+        <h3>Marketing Digital</h3>
+        <ul>
+          <li>Stratégies de marketing digital</li>
+          <li>Brand Content</li>
+          <li>Publicité en ligne (Google Ads, Facebook Ads)</li>
+          <li>Durée : 3 mois</li>
+          <li>Coût : 10 000 FCFA (inscription) + 15 000 FCFA/mois</li>
+        </ul>
+        <button onclick="openForm('Marketing Digital')">Demander un devis</button>
+      </div>
+      <div class="formation-card" data-aos="fade-up" data-aos-delay="200">
+        <h3>Excel & Word Avancé</h3>
+        <ul>
+          <li>Maîtrise des outils bureautiques</li>
+          <li>Automatisation des tâches</li>
+          <li>Gestion de données complexes</li>
+          <li>Durée : 3 mois</li>
+          <li>Coût : 10 000 FCFA (inscription) + 15 000 FCFA/mois</li>
+        </ul>
+        <button onclick="openForm('Excel & Word Avancé')">Demander un devis</button>
+      </div>
+      <div class="formation-card" data-aos="fade-up" data-aos-delay="300">
+        <h3>Design Graphique</h3>
+        <ul>
+          <li>Adobe Photoshop, Illustrator</li>
+          <li>Création de logos et visuels</li>
+          <li>Design d'interfaces utilisateur (UI)</li>
+          <li>Durée : 3 mois</li>
+          <li>Coût : 10 000 FCFA (inscription) + 15 000 FCFA/mois</li>
+        </ul>
+        <button onclick="openForm('Design Graphique')">Demander un devis</button>
+      </div>
+      <div class="formation-card" data-aos="fade-up" data-aos-delay="400">
+        <h3>Gestion de Projet</h3>
+        <ul>
+          <li>Méthodologies Agile et Scrum</li>
+          <li>Gestion des ressources et planning</li>
+          <li>Outils : Trello, Jira, Asana</li>
+          <li>Durée : 3 mois</li>
+          <li>Coût : 10 000 FCFA (inscription) + 15 000 FCFA/mois</li>
+        </ul>
+        <button onclick="openForm('Gestion de Projet')">Demander un devis</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Carte -->
+  <div class="map-container">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.1234567890123!2d-17.123456789012345!3d14.123456789012345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDA3JzI0LjQiTiAxN8KwMDcnMjQuNCJX!5e0!3m2!1sfr!2ssn!4v1631234567890!5m2!1sfr!2ssn" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+
+  <!-- Formulaire de contact -->
+  <div class="contact-form-container">
+    <h2>Contactez-nous</h2>
+    <form id="contact-form">
+      <input type="text" id="nom" placeholder="Nom" required>
+      <input type="text" id="prenom" placeholder="Prénom" required>
+      <input type="tel" id="tel" placeholder="Téléphone" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <textarea id="message" placeholder="Rédigez votre message" required></textarea>
+      <button type="submit">Envoyer</button>
+    </form>
+     
+  </div>
+  {%endblock%}
+<br><br>
+  <!-- Pied de page -->
+  <footer>
+    <p>Contactanos para más información</p>
+    <div class="contact-info">
+      <p><strong>Teléfono :</strong> +221 784261956</p>
+      <p><strong>Email :</strong> Stiven10@gmail.com</a></p>
+    </div>
+    <div class="creator">
+      <p>Creado con Python(Django) - JavaScript - HTML  <br><strong>KevinSt</strong></p>
+    </div>
+  </footer>
+
+  <!-- Script AOS (Animate On Scroll) -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+ <script>
+AOS.init({
+  duration: 500,
+  once: true,
+});
+
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+  contactForm.addEventListener('submit', () => {
+    alert("Tu mensaje fue enviado con éxito!");
+  });
+}
+</script>
+
+
+
+</body>
+
+</html>
