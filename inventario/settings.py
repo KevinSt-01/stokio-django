@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import dj_database_url
+import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
 
@@ -80,13 +81,17 @@ WSGI_APPLICATION = 'inventario.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+SECRET_KEY = os.environ.get('SECRET_KEY')
+DATABASES = {   
+        'default': dj_database_url.config(default='sqlite:///db.sqlite3')
+        }
 
-DATABASES = {
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}
+}'''
 
 
 # Password validation
