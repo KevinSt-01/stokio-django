@@ -19,7 +19,7 @@ MESSAGE_STORAGE =  "django.contrib.messages.storage.session.SessionStorage"
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = '/static/'
-STATIC_URL = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #Esto le dice a DJANGO que tu modelo Usuarios es el modelo de usuario por defecto.
 AUTH_USER_MODEL = 'usuarios.Usuarios'
