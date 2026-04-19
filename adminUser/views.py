@@ -126,9 +126,11 @@ def generar_pdf(request, id):
     pdf.cell(0, 8, str(producto.fecha_salida), 1, ln=True)
 
     return HttpResponse(
-        bytes(pdf.output(dest="S")),
+        pdf.output(dest="S").encode("latin-1"),
         content_type="application/pdf"
     )
+    
+
 
 def reporte_general(request): 
     productos = Producto.objects.all()
@@ -171,7 +173,7 @@ def reporte_general(request):
         
         pdf.ln(5)
         
-    return HttpResponse(bytes(pdf.output(dest="S")), content_type = "application/pdf")
+    return HttpResponse(bytes(pdf.output(dest="S").encode("latin-1")), content_type = "application/pdf")
         
         
         
