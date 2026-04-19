@@ -19,7 +19,7 @@ MESSAGE_STORAGE =  "django.contrib.messages.storage.session.SessionStorage"
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #Esto le dice a DJANGO que tu modelo Usuarios es el modelo de usuario por defecto.
 AUTH_USER_MODEL = 'usuarios.Usuarios'
@@ -34,7 +34,7 @@ SECRET_KEY = 'django-insecure-iq(l=u+hdce+=!(9&zn=fdz306%w_irb^&(hsr)f5t@1)70#7a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -83,10 +83,7 @@ WSGI_APPLICATION = 'inventario.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-SECRET_KEY = os.environ.get('SECRET_KEY')
-DATABASES = {   
-        'default': dj_database_url.config(default='sqlite:///db.sqlite3')
-        }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
